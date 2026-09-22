@@ -22,16 +22,20 @@ jobs:
       - name: 构建自用版
         run: npx vite build
 
+      # 注意：.vercel/ 已被 .gitignore 忽略，CI 里没有项目关联信息，
+      # 必须显式给 ORG_ID / PROJECT_ID，否则 vercel 会「找不到项目」而失败。
       - name: 部署到 Vercel
         run: npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
   # ---------- 朋友版 → Cloudflare Pages ----------
+  # 不再 needs: self —— 兩邊互不依賴，Vercel 失敗不會連累朋友版
   friend:
     name: 朋友版 (Cloudflare Pages)
     runs-on: ubuntu-latest
-    needs: self
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
