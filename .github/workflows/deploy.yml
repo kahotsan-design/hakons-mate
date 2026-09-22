@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # ---------- 自用版 → Vercel ----------
+  self:
+    name: 自用版 (Vercel)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci || npm install
+
+      - name: 构建自用版
+        run: npx vite build
+
+      - name: 部署到 Vercel
+        run: npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+  # ---------- 朋友版 → Cloudflare Pages ----------
+  friend:
+    name: 朋友版 (Cloudflare Pages)
+    runs-on: ubuntu-latest
+    needs: self
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci || npm install
+
+      - name: 构建朋友版
+        run: npx vite build
+        env:
+          VITE_ENABLE_MAIL: 'false'
+          VITE_FRIEND: '1'
+          VITE_API_BASE: 'https://hakons-mate-mobile.vercel.app'
+
+      - name: 部署到 Cloudflare Pages
+        run: npx wrangler pages deploy dist --project-name hakons-mate-friend --branch main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
