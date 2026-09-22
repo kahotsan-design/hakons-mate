@@ -2,7 +2,16 @@
 
 给香港城市大学（CityU）学生做的 iOS PWA 学习生活助手。极地冰雪视觉语言，装到主屏后跟原生 App 无异。
 
-![PWA](https://img.shields.io/badge/PWA-iOS%20standalone-2E86B8) ![React](https://img.shields.io/badge/React-18-61DAFB) ![Vite](https://img.shields.io/badge/Vite-5-646CFF) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6)
+![PWA](https://img.shields.io/badge/PWA-iOS%20standalone-2E86B8) ![React](https://img.shields.io/badge/React-18-61DAFB) ![Vite](https://img.shields.io/badge/Vite-5-646CFF) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6) ![Deploy](https://img.shields.io/badge/deploy-Vercel%20%2B%20Cloudflare-2E86B8)
+
+**在线体验**
+
+| 版本 | 地址 | 说明 |
+|---|---|---|
+| 自用版 | [hakons-mate-mobile.vercel.app](https://hakons-mate-mobile.vercel.app) | 完整功能，含邮件模块 |
+| 朋友版 | [hakons-mate-friend.pages.dev](https://hakons-mate-friend.pages.dev) | 去掉邮件模块，无用户名 |
+
+> iOS Safari 打开后「分享 → 添加到主屏幕」，即可获得全屏无地址栏的原生体验。
 
 ---
 
