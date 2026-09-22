@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 70" width="220" height="70">
+  <defs>
+    <!-- 冰晶主渐变：从冰白到冰蓝，模拟晶体内部折射 -->
+    <linearGradient id="iceTextFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#e0f2fe" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0.75"/>
+    </linearGradient>
+    <!-- 描边渐变：冰蓝色描边勾勒晶体边界 -->
+    <linearGradient id="iceTextStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dbeafe" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.7"/>
+    </linearGradient>
+    <!-- 顶部高光 -->
+    <linearGradient id="topShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- 滤色器：让字有微微的晶体折射光晕 -->
+    <filter id="iceBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- 主文字：填充冰晶渐变 + 冰蓝描边勾勒晶体边界 -->
+  <text x="110" y="48"
+    font-family="Outfit, -apple-system, sans-serif"
+    font-size="42"
+    font-weight="900"
+    text-anchor="middle"
+    fill="url(#iceTextFill)"
+    stroke="url(#iceTextStroke)"
+    stroke-width="0.8"
+    filter="url(#iceBlur)"
+    letter-spacing="2.5"
+  >HAKON</text>
+
+  <!-- 顶部高光层：白色描边勾勒字母顶部（冰晶反射光） -->
+  <text x="110" y="46"
+    font-family="Outfit, -apple-system, sans-serif"
+    font-size="42"
+    font-weight="900"
+    text-anchor="middle"
+    fill="none"
+    stroke="url(#topShine)"
+    stroke-width="0.5"
+    letter-spacing="2.5"
+    opacity="0.7"
+  >HAKON</text>
+
+  <!-- 高光小点：字母上的小反光（像晶体表面闪光） -->
+  <circle cx="36" cy="22" r="1.2" fill="#ffffff" opacity="0.95"/>
+  <circle cx="78" cy="20" r="0.9" fill="#ffffff" opacity="0.85"/>
+  <circle cx="118" cy="22" r="1.1" fill="#ffffff" opacity="0.9"/>
+  <circle cx="158" cy="20" r="0.8" fill="#ffffff" opacity="0.8"/>
+  <circle cx="186" cy="24" r="1" fill="#ffffff" opacity="0.85"/>
+
+  <!-- 底部滴落感的小水珠（冰晶融化的暗示） -->
+  <circle cx="98" cy="56" r="1" fill="#bae6fd" opacity="0.7"/>
+  <circle cx="142" cy="58" r="0.7" fill="#e0f2fe" opacity="0.6"/>
+</svg>

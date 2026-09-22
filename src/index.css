@@ -1,0 +1,2157 @@
+/* ============ 全局变量 · 極地藍白天主題（冷調天空 + 雪白卡 + 墨藍字） ============ */
+:root {
+  /* 模块主题色 - 中飽和極地藍（雪白卡上可读） */
+  --color-campus: #2E86B8;      /* 極地湖藍 */
+  --color-job: #5FA8D4;        /* 晴空粉藍 */
+  --color-fitness: #4A9BC8;    /* 極地薄荷 */
+
+  /* 模块背景色 - 白卡上的淡彩底 */
+  --color-campus-bg: rgba(46, 134, 184, 0.12);
+  --color-job-bg: rgba(95, 168, 212, 0.13);
+  --color-fitness-bg: rgba(74, 155, 200, 0.13);
+
+  /* 通用色 - 白天極地藍（冷調） */
+  --color-bg: #4F97D2;           /* 冷調明亮天空藍底 */
+  --color-card: #F3F7F9;         /* 雪白卡（浮在天空上） */
+  --color-text: #113050;         /* 墨藍文字（深一檔，對比度↑） */
+  --color-text-secondary: #1D4E73; /* 中深藍 */
+  --color-text-tertiary: #3D6A8F;  /* 霧藍 */
+  --color-border: rgba(22, 60, 91, 0.22); /* 深藍描邊（手繪線稿感） */
+  --color-danger: #C4776F;
+  --color-warning: #B3865C;
+  --color-success: #2E86B8;
+  --color-primary: #2E86B8;      /* 主色=極地湖藍 */
+  --color-sun: #F9EDC4;          /* 暖奶暖奶黃（藍底上的強調文字，打破單調） */
+
+  /* 極地特色色 */
+  --color-ice: #A8D8EA;           /* 冰晶粉藍（點綴） */
+  --color-ice-deep: #1D4E73;     /* 深一檔的藍（白卡上用） */
+  --color-frost: #4A7FAE;        /* 霜藍 */
+  --color-snow: #FDFEFE;         /* 雪白（比奶油白更亮，輸入框底） */
+
+  /* 展示字體：中文手繪感標題 + 圓潤數字 */
+  --font-display: 'ZCOOL QingKe HuangYou', 'Baloo 2', -apple-system, 'PingFang SC', sans-serif;
+  --font-num: 'Baloo 2', 'ZCOOL QingKe HuangYou', -apple-system, sans-serif;
+
+  /* 全局頁面背景：4 朵錯落雪花（少少的手繪感）+ 極地藍漸變。
+     雪花是 inline SVG，淺淺的雪白色（opacity 0.18），不擋閱讀。
+     所有 .page 透過 var(--bg-page) 引用，確保每頁都有雪。 */
+  --bg-page:
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='240'%20height='380'%20viewBox='0%200%20240%20380'%3E%3Cg%20stroke='white'%20stroke-width='1.2'%20stroke-linecap='round'%20opacity='0.18'%20fill='none'%3E%3Cpath%20d='M40%2050v18M32%2054l16%209M48%2054l-16%209'/%3E%3Cpath%20d='M170%20130v24M158%20136l24%2014M182%20136l-24%2014'/%3E%3Cpath%20d='M80%20240v16M73%20244l14%207M87%20244l-14%207'/%3E%3Cpath%20d='M200%20310v14M194%20314l12%206M206%20314l-12%206'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(180deg, #4F97D2 0%, #63A8DA 50%, #77BCE6 100%);
+
+  /* 主按鈕：極地湖藍實底（手繪平色，無漸變無紋理）。
+     所有按鈕都是 background: var(--gradient-ice) 引用，改這一處全部生效。 */
+  --gradient-ice: #2E86B8;
+  --gradient-frost: linear-gradient(180deg, rgba(253, 254, 254, 0.72) 0%, rgba(247, 241, 227, 0.62) 100%);
+  --gradient-snow: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(253, 254, 254, 0.30) 100%);
+  --gradient-deep: linear-gradient(180deg, #4F97D2 0%, #63A8DA 50%, #77BCE6 100%);
+
+  /* 间距 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* 圆角 */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* 阴影 - 天空柔影（白卡浮在蓝天上的软投影） */
+  --shadow-sm: 0 1px 3px rgba(31, 58, 89, 0.08);
+  --shadow-md: 0 3px 12px rgba(31, 58, 89, 0.09);
+  --shadow-lg: 0 6px 20px rgba(31, 58, 89, 0.12);
+  --shadow-ice: 0 6px 20px rgba(31, 58, 89, 0.10);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-page);
+  /* 背景固定不隨文檔滾動：iOS 聚焦輸入框時會短暫滾動整個文檔，
+     露出 body 之外的區域會顯示 html 背景。以前是純色 #4F97D2
+     → 看成一塊突兀的「藍色色塊」。改成與 #root/.page 同一張
+     雪花天空後，露出來的是同一片天空，色塊消失。 */
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  /* iOS PWA standalone + viewport-fit=cover 下：
+     100vh = 包含 home indicator 的完整屏幕高度（稳定值）
+     100dvh 在部分 iOS 版本会算小，导致 root 不到底、底部漏出 body 蓝带
+     → 不用 dvh，改用 JS 寫入的 --app-h（visualViewport 真實可視高度）：
+     Safari 瀏覽器模式（地址欄佔高）與軟鍵盤態都能跟隨，
+     根治「頁面劃不到底」。未注入前 fallback 100vh（PWA standalone 正確）。 */
+  height: var(--app-h, 100vh);
+  overflow: hidden;
+}
+body {
+  position: fixed;
+  inset: 0;
+  /* 只有 body fixed（iOS 鎖滾標準做法）。html 千萬別 fixed：
+     iOS WebKit 下 html 為 fixed 會干擾 fixed 後代（彈層 modal）的
+     包含塊與層疊，彈層定位錯亂、周邊露出 html 藍底「色塊」bug */
+}
+
+#root {
+  max-width: 430px;
+  margin: 0 auto;
+  /* 跟随 JS 寫入的真實可視高度（Safari 地址欄/鍵盤態正確），
+     fallback 100vh（PWA standalone 恒等屏高） */
+  height: var(--app-h, 100vh);
+  /* 全局背景：4 朵錯落雪花（少少的手繪感）+ 極地藍漸變。
+     所有 .page 透過 --bg-page 引用，確保每頁都有雪 */
+  background: var(--bg-page);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============ 通用组件样式 · 極地藍白天卡 ============
+   奶油白卡浮在明亮天空上（层级全靠明度差拉开），
+   深蓝细描边 = 手绘线稿感，与 Home 雪山插画同语言 */
+.card {
+  position: relative;
+  /* 雪卡暖白：上雪白下微暖 */
+  background: linear-gradient(180deg, #FDFEFE 0%, #F3F7F9 60%, #EAF0F3 100%);
+  border-radius: 18px;
+  padding: var(--space-md);
+  box-shadow:
+    /* 天空软投影（浮起的关键） */
+    0 2px 8px rgba(31, 58, 89, 0.07),
+    0 8px 20px rgba(31, 58, 89, 0.07),
+    /* 顶缘微光 */
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  margin-bottom: var(--space-sm);
+  border: 1px solid rgba(22, 60, 91, 0.22);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* 左上高光弧（雪面反光的柔弧） */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 6%; right: 6%;
+  height: 50%;
+  border-radius: 0 0 100% 100% / 0 0 100% 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(0.5px);
+}
+
+/* 底部弧形内反光（微弱冰蓝折回光） */
+/* 卡底内反光已移除（干净要求） */
+
+/* 卡片内容浮到高光层之上 */
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ iOS 光標修復（關鍵） ============
+ * WebKit 已知 bug：backdrop-filter（毛玻璃）容器內的輸入框，
+ * 中文輸入法組詞時光標會錯位亂跳。
+ * 方案：卡內任一輸入框聚焦時，該卡暫時卸掉毛玻璃改實底（focus-within），
+ * 失焦後自動恢復玻璃質感。視覺幾乎無感，光標根治。
+ */
+.card:focus-within {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: #F2F6F8;
+  transition: background 0.15s ease;
+}
+
+/* 輸入框聚焦時卡片內的高光偽元素也隱藏（避免疊在實底上突兀） */
+.card:focus-within::before {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+/* iOS Safari：字號 <16px 的輸入框聚焦時會強制放大頁面，視覺上「光標飛走」。
+ * 統一所有輸入控件字號 ≥16px（含原有的 15px 表單，視覺差異極小）。 */
+input,
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* ============ 原生控件「藍色色塊」防治 ============
+ * iOS/部分 Chromium 上聚焦輸入框會露出幾種原生藍：
+ *   1) input[type=date] 的原生日曆按鈕（黢黑小方塊/藍底）
+ *   2) Chrome 的自動填充（-webkit-autofill）強制 inset 藍底 + 黃字
+ *   3) 點按時的 tap 高亮（早被 * 上的 -webkit-tap-highlight-color 關掉，
+ *      這裡再兜一道）
+ * 三者統一改成「雪白底 + 極地湖藍圖標」，不允許出現原生藍塊。 */
+/* 只關掉數字微調箭頭（iOS 上本來就沒有），
+   日期/時間框本身保留原生外觀，避免 iOS 上出現「值不顯示」的坑，
+   改用下面的自繪圖標替換原生小方塊。 */
+input[type='number'] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='time']::-webkit-calendar-picker-indicator,
+input[type='datetime-local']::-webkit-calendar-picker-indicator,
+input[type='month']::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  opacity: 0.55;
+  /* 用湖藍實色方塊 + 內嵌白色日曆線稿做自繪圖標，取代原生圖標 */
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 16px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%232E86B8'%20stroke-width='1.9'%20stroke-linecap='round'%3E%3Crect%20x='3'%20y='5'%20width='18'%20height='16'%20rx='2.5'/%3E%3Cpath%20d='M8%203v4M16%203v4M3%2010h18'/%3E%3C/svg%3E");
+  filter: none;
+}
+input[type='date']::-webkit-inner-spin-button,
+input[type='time']::-webkit-inner-spin-button,
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+/* Chrome 自動填充：用超長 transition 把原生藍底「按住」，不讓它閃出來 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-text) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-snow) inset !important;
+  box-shadow: 0 0 0 1000px var(--color-snow) inset !important;
+  caret-color: var(--color-text);
+  transition: background-color 100000s ease-in-out 0s;
+}
+
+.page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  /* 與 #root 同套背景：4 朵錯落雪花 + 極地藍漸變，每頁都有 */
+  background: var(--bg-page);
+}
+
+.page-scroll {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--space-md);
+  /* 給 fixed nav 留空間：nav 吃滿 safe-area 後實高 ≈ 95px + 餘量 */
+  padding-bottom: calc(105px + env(safe-area-inset-bottom, 6px));
+}
+
+/* 页面顶部冰雪装饰 - 移到 page-scroll 内部 */
+.page-scroll::before {
+  display: none;
+}
+
+/* ============ 透明页眉（去掉深蓝块） ============
+   参考 B 方案确认的极简语言：
+   - 无背景色，直接浮在天空蓝渐变上
+   - 深冰蓝文字（#0c4a6e），替代白字
+   - 只保留安全区 padding + 垂直居中 */
+.page-header {
+  flex-shrink: 0;
+  padding: var(--space-md);
+  padding-top: calc(env(safe-area-inset-top, 0px) + var(--space-xs));
+  padding-bottom: var(--space-xs);
+  background: none;
+  color: #FDFEFE;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  overflow: visible;
+  box-sizing: border-box;
+  min-height: calc(env(safe-area-inset-top, 0px) + 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* 头区内的标题统一去掉多余 margin */
+.page-header .page-title {
+  margin-bottom: 0;
+}
+
+/* 头区装饰全部移除 */
+.page-header::after {
+  display: none;
+}
+
+/* 页面顶部冰雪装饰 */
+.page::before {
+  display: none;
+}
+
+/* ============ 品牌字体 ============ */
+/* 品牌英文标识：Outfit —— 几何无衬线，字重对比强烈，冰感现代 */
+.font-brand {
+  font-family: 'Baloo 2', -apple-system, 'PingFang SC', sans-serif;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-md);
+  padding-top: var(--space-sm);
+  color: #FDFEFE;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  margin-top: var(--space-md);
+  color: #FDFEFE;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 模块标签 - 冰蓝系 */
+.module-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.module-tag.campus {
+  background: var(--color-campus-bg);
+  color: var(--color-campus);
+}
+
+.module-tag.job {
+  background: var(--color-job-bg);
+  color: var(--color-job);
+}
+
+.module-tag.fitness {
+  background: var(--color-fitness-bg);
+  color: var(--color-fitness);
+}
+
+/* 优先级标签 - 深底亮字 */
+.priority-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.priority-tag.high {
+  background: rgba(194, 64, 42, 0.28);
+  color: var(--color-danger);
+}
+
+.priority-tag.medium {
+  background: rgba(247, 192, 107, 0.16);
+  color: var(--color-warning);
+}
+
+.priority-tag.low {
+  background: var(--color-fitness-bg);
+  color: var(--color-fitness);
+}
+
+/* ============ 冰雪按钮（手繪平色：實底 + 描邊）============ */
+.btn-ice {
+  background: #2E86B8;
+  color: #FDFEFE;
+  border: 1.5px solid #FDFEFE;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.5s cubic-bezier(0.22, 1.61, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ice:active {
+  transform: scale(0.96);
+  transition: transform 0.12s ease-out;
+}
+
+/* ============ 底部导航 · 雪面实底（性能優先，無 blur）============ */
+.bottom-nav {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 430px;
+  /* 奶白實底：不再磨砂，滾動零重繪 */
+  background: #F7FAFC;
+  border-top: 1.5px solid rgba(46, 110, 168, 0.30);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 0;
+  padding-bottom: env(safe-area-inset-bottom, 6px);
+  z-index: 100;
+  box-shadow: 0 -1px 10px rgba(31, 58, 89, 0.16);
+  /* iOS PWA standalone + viewport-fit=cover 下，position:fixed;bottom:0
+     會被推到 safe-area 上方（home indicator 之上），nav 與屏底留出 ~30-60px
+     空帶（朋友版截圖實測 ~63px）。兩個保險：
+     1. nav 自身高度吃滿 safe-area —— iOS 推 nav 上方，nav 自身仍延伸到屏底
+     2. ::after 偽元素額外覆蓋 safe-area，徹底消除任何藍帶 */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  /* 1. 自身向下擴張到屏底：原高度 61px + safe-area ≈ 95px */
+  min-height: calc(61px + env(safe-area-inset-bottom, 0px));
+}
+
+/* 2. 偽元素向下延伸覆蓋 safe-area，確保背景到屏底全奶白 */
+.bottom-nav::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: env(safe-area-inset-bottom, 0px);
+  background: #F7FAFC;
+  pointer-events: none;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  text-decoration: none;
+  color: var(--color-text-tertiary);
+  font-size: 10px;
+  font-weight: 500;
+  transition: color 0.2s, transform 0.15s;
+}
+
+.nav-item.active {
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.nav-item.active svg {
+  /* 手繪平色：單層輕投影（原三層輝光已移除，性能友好） */
+  filter: drop-shadow(0 1px 2px rgba(31, 58, 89, 0.35));
+}
+
+.nav-item svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ============ 冰雪装饰元素 ============ */
+
+/* 冰晶装饰 - 用于卡片角落 */
+.ice-corner {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle at top right, var(--color-ice) 0%, transparent 70%);
+  border-radius: 0 var(--radius-md) 0 0;
+  pointer-events: none;
+}
+
+/* ============ 雪花特效 keyframes（SnowFX 组件专用） ============
+   硬性约束：所有特效容器 pointer-events:none、z-index 低于底部导航(100)，
+   禁止全屏持续飘雪（只有首页顶部 200px 区域 + 短时交互彩蛋）。 */
+
+/* ① 首页顶部 200px 落雪：从 -12px 缓慢落到 224px（超出容器被 overflow:hidden 裁剪 = 销毁） */
+@keyframes snow-drift {
+  0% { transform: translate3d(0, -12px, 0) rotate(0deg); opacity: 0; }
+  8% { opacity: var(--snow-o, 0.7); }
+  88% { opacity: var(--snow-o, 0.7); }
+  100% { transform: translate3d(var(--snow-x, 12px), 224px, 0) rotate(220deg); opacity: 0; }
+}
+
+/* ② 待办勾选迸发（v2 调优版）：
+   - 粒子"原地闪烁+轻位移"：靠近勾选点亮 6~18px，始终在行内可见
+   - 颜色冰蓝（白卡片上高对比），时长 0.9~1.3s 完整播放
+   - 配合 .snowfx-ripple 冲击波形成"勾选瞬时反馈" */
+@keyframes snow-burst {
+  0%   { transform: translate(0, 0) scale(0.1) rotate(0deg); opacity: 0; }
+  15%  { transform: translate(calc(var(--bx, 0px) * 0.3), calc(var(--by, 0px) * 0.3)) scale(1.25) rotate(calc(var(--rot, 0deg) * 0.3)); opacity: 1; }
+  60%  { opacity: 0.8; }
+  100% { transform: translate(var(--bx, 0px), var(--by, 0px)) scale(0.35) rotate(var(--rot, 0deg)); opacity: 0; }
+}
+
+/* 勾选冲击波：从勾选圆圈扩散的冰蓝圆环（瞬间可见的完成反馈） */
+@keyframes snow-ripple {
+  0%   { transform: scale(0.3); opacity: 0.95; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* 冲击波圆环本体（SnowBurst 组件内使用） */
+.snowfx-burst .snowfx-ripple {
+  position: absolute;
+  left: -21px; top: -21px;   /* 42px 直径，中心对齐迸发原点 */
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(56, 189, 248, 0.8);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5), inset 0 0 8px rgba(125, 211, 252, 0.4);
+  animation: snow-ripple 0.7s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+/* ③ 饮食保存雪粒（v2）：冰蓝雪粒上飘消散，右下角区域 */
+@keyframes snow-grain {
+  0%   { transform: translateY(0) scale(0.4); opacity: 0; }
+  18%  { opacity: 1; }
+  100% { transform: translateY(-30px) scale(1); opacity: 0; }
+}
+
+/* ④ Tab 切换边缘彩蛋：屏幕边缘小雪花向外飘散，0.8s 自动消散 */
+@keyframes snow-edge {
+  0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+  20% { opacity: 0.85; }
+  100% { transform: translate(var(--ex, 0px), var(--ey, 40px)) scale(1); opacity: 0; }
+}
+
+/* 无障碍：用户系统开启"减少动态效果"时，关闭全部雪花动画 */
+@media (prefers-reduced-motion: reduce) {
+  [class*="snowfx"] span {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* 冰光渐入 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+/* 冰光脉冲 - 用于重要提醒 */
+@keyframes icePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(91, 184, 229, 0.3); }
+  50% { box-shadow: 0 0 0 6px rgba(91, 184, 229, 0); }
+}
+
+.ice-pulse {
+  animation: icePulse 2s ease-in-out infinite;
+}
+
+/* ============ 滚动条隐藏 ============ */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============ 渐变文字 ============ */
+.gradient-text {
+  background: var(--gradient-ice);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============ 冰蓝统计卡片 · 夜空玻璃 ============ */
+.stat-card-ice {
+  background: #FDFEFE;
+  border: 1px solid rgba(22, 60, 91, 0.18);
+  border-radius: var(--radius-md);
+  padding: 10px;
+  text-align: center;
+  flex: 1;
+  margin-bottom: 0;
+  box-shadow: 0 2px 8px rgba(31, 58, 89, 0.06);
+}
+
+/* ============ 统一交互反馈 · 丝滑版 ============
+   原理：按下要快（跟手感 0.12s ease-out），
+   松开回弹要慢且带弹性（0.5s 弹簧曲线）→ Q弹不脆 */
+
+/* 所有 button：回弹带弹簧感 */
+button {
+  transition: transform 0.5s cubic-bezier(0.22, 1.61, 0.36, 1),
+              opacity 0.25s ease-out,
+              background 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.25s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.96);
+  opacity: 0.8;
+  /* 按下瞬间快速响应（覆盖上面的慢回弹） */
+  transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+}
+
+/* 卡片：轻按下沉、松手浮起 */
+.card {
+  transition: transform 0.55s cubic-bezier(0.22, 1.61, 0.36, 1),
+              box-shadow 0.3s ease-out,
+              opacity 0.25s ease-out;
+}
+
+.card:active {
+  transform: scale(0.975);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+}
+
+/* 可点击的选项按钮（餐次、运动类目等） */
+button:active:not(:disabled) {
+  opacity: 0.75;
+}
+
+/* 输入框聚焦反馈 */
+input:focus, textarea:focus, select:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(91, 184, 229, 0.16);
+}
+
+input, textarea, select {
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* 删除/操作图标：小弹簧 */
+svg[style*="cursor: pointer"] {
+  transition: transform 0.45s cubic-bezier(0.22, 1.61, 0.36, 1), opacity 0.2s ease-out;
+}
+
+svg[style*="cursor: pointer"]:active {
+  transform: scale(0.85);
+  opacity: 0.6;
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+}
+
+/* 底部导航项：点按下沉、切换上浮 */
+.nav-item:active {
+  transform: scale(0.9);
+  transition: transform 0.1s ease-out;
+}
+
+/* 通用选中态 - 用于选中的选项 */
+.selected-glow {
+  box-shadow: 0 0 0 2px var(--color-primary), 0 4px 12px rgba(91, 184, 229, 0.22);
+}
+
+/* 日期滑块项选中动画 */
+@keyframes selectPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1.12); }
+}
+
+/* ============ 开屏动画（已简化为纯淡入淡出，无 keyframes） ============ */
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ============ 页面切换丝滑过渡 ============ */
+@keyframes pageSlideIn {
+  from { opacity: 0; transform: translateX(12px) scale(0.99); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.page-transition {
+  animation: pageSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============ 列表项依次入场 ============ */
+@keyframes itemSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 彈層遮罩漸入（回應「藍色色塊跳出來」：遮罩不再瞬間出現） */
+@keyframes modalFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.card {
+  animation: itemSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* 第 N 个卡片延迟入场 */
+.card:nth-child(1) { animation-delay: 0.02s; }
+.card:nth-child(2) { animation-delay: 0.06s; }
+.card:nth-child(3) { animation-delay: 0.1s; }
+.card:nth-child(4) { animation-delay: 0.14s; }
+.card:nth-child(5) { animation-delay: 0.18s; }
+.card:nth-child(6) { animation-delay: 0.22s; }
+.card:nth-child(7) { animation-delay: 0.26s; }
+.card:nth-child(8) { animation-delay: 0.3s; }
+
+/* ============ 按钮反馈（已并入上方统一体系，此处仅保留特殊覆写） ============ */
+
+/* ============ 增强卡片反馈（已并入上方统一体系） ============ */
+
+/* ============ section-title 入场 ============ */
+@keyframes titleSlideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.section-title {
+  animation: titleSlideIn 0.3s ease both;
+}
+
+/* ============ 底部导航切换动画 ============ */
+.nav-item {
+  transition: color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 0.45s cubic-bezier(0.22, 1.61, 0.36, 1);
+}
+
+.nav-item.active {
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* ============ 输入框丝滑聚焦 ============ */
+input, textarea, select {
+  transition: border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.2s;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(91, 184, 229, 0.18), 0 2px 8px rgba(91, 184, 229, 0.1);
+  background: #F2F6F8 !important;
+}
+
+/* ============ 图标点击反馈（已并入上方统一体系） ============ */
+
+/* ============ 统计卡片交互 ============ */
+.stat-card-ice {
+  transition: transform 0.5s cubic-bezier(0.22, 1.61, 0.36, 1), box-shadow 0.25s ease-out;
+  animation: itemSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.stat-card-ice:nth-child(1) { animation-delay: 0.02s; }
+.stat-card-ice:nth-child(2) { animation-delay: 0.08s; }
+.stat-card-ice:nth-child(3) { animation-delay: 0.14s; }
+
+.stat-card-ice:active {
+  transform: scale(0.96);
+  transition: transform 0.12s ease-out;
+}
+
+/* ============ 模块标签入场 ============ */
+@keyframes tagPop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.module-tag {
+  animation: tagPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ============ 优先级标签入场 ============ */
+.priority-tag {
+  animation: tagPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ============ fade-in 增强 ============ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============ 动效增强 v2 ============ */
+
+/* 页面切换：蓝色 header 与底部导航保持静止（稳定的世界背景），
+   只有内容区入场 —— 消除 header 闪烁带来的割裂感 */
+.page-transition {
+  animation: none;
+}
+
+/* 入场动画从页面容器下沉到内容区 */
+.page.fade-in {
+  animation: none;
+}
+
+.page-scroll {
+  animation: fadeIn 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 今日概览卡片入场 */
+@keyframes overviewIn {
+  0%   { opacity: 0; transform: translateY(6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.overview-card {
+  animation: overviewIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 今日概览里的数字弹跳入场 */
+@keyframes countPop {
+  0%   { opacity: 0; transform: scale(0.4); }
+  60%  { transform: scale(1.12); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.overview-card .count-value {
+  display: inline-block;
+  animation: countPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.overview-card .count-value:nth-child(1) { animation-delay: 0.05s; }
+.overview-card .count-value:nth-child(2) { animation-delay: 0.12s; }
+.overview-card .count-value:nth-child(3) { animation-delay: 0.19s; }
+.overview-card .count-value:nth-child(4) { animation-delay: 0.26s; }
+
+/* section-title 交错延迟（避免全屏同速滑动显得呆板） */
+.section-title:nth-of-type(1) { animation-delay: 0.05s; }
+.section-title:nth-of-type(2) { animation-delay: 0.1s; }
+
+/* 底部导航辉光呼吸动画已移除（性能：常驻 filter 动画每帧重绘） */
+/* iOS 26 液态玻璃 Tab → 手繪平色版 */
+.liquid-tab {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 10px 6px;
+  border: none;
+  border-radius: 11px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: background 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              color 0.25s ease,
+              transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+/* 未选中：雪白药丸（手繪風：實底單色 + 描邊，零效果） */
+.liquid-tab:not(.active) {
+  color: #1D4E73;
+  background: #FDFEFE;
+  border: 1.5px solid rgba(46, 110, 168, 0.42);
+}
+
+/* 选中：湖藍實底 + 深一檔描邊（手繪風雙色反轉，一眼看出選中） */
+.liquid-tab.active {
+  color: #FDFEFE;
+  font-weight: 700;
+  background: #2E86B8;
+  border: 1.5px solid #FDFEFE;
+}
+
+/* 按下反馈 */
+.liquid-tab:active {
+  transform: scale(0.95);
+}
+
+/* 玻璃棱線高光已移除（手繪平色風） */
+
+.liquid-tab > * {
+  position: relative;
+  z-index: 1;
+}/* liquid-tab 已并入 */
+
+/* ============ 横向軌道導航（RailNav · CityUHK / 減肥頂部） ============
+   三模塊均分橫向空間、同屏全可見；中心模塊字最大全對比，
+   兩側縮小半透明。底部一條真實滑軌：內凹軌槽 + 每檔定位凹點 +
+   白色立體滑塊騎在槽上滑動並壓住當前檔位。緊湊貼住頁面標題。 */
+.rail-nav {
+  position: relative;
+  display: flex;
+  height: 58px;
+  margin: 0 0 14px;
+  touch-action: pan-y;
+}
+.rail-item {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 4px 22px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: rgba(253, 254, 254, 0.62);
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  transform: scale(0.92);
+  transform-origin: center 40%;
+  transition: transform 0.38s cubic-bezier(0.3, 0.7, 0.2, 1),
+    opacity 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+}
+.rail-item.center {
+  color: #FDFEFE;
+  font-weight: 700;
+  font-size: 18px;
+  transform: scale(1);
+}
+.rail-item:active { opacity: 0.82; }
+.rail-item .rail-label { transition: none; }
+
+/* 軌槽：內凹的滑軌凹槽（上緣暗、下緣亮 = 凹陷受光） */
+.rail-track {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 8px;
+  height: 6px;
+  border-radius: 4px;
+  background: linear-gradient(180deg,
+    rgba(11, 28, 48, 0.32) 0%,
+    rgba(11, 28, 48, 0.13) 55%,
+    rgba(11, 28, 48, 0.22) 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(8, 22, 38, 0.42),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.17),
+    0 1px 0 rgba(255, 255, 255, 0.10);
+  pointer-events: none;
+}
+/* 檔位凹點：槽上每個模塊中心的小凹坑（與滑塊同基準定位 → 滑塊滑到就壓住它） */
+.rail-notch {
+  position: absolute;
+  bottom: 11px;            /* 軌槽中心（槽 bottom 8px + 高 6px / 2） */
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  transform: translate(-50%, 50%);
+  background: rgba(8, 22, 38, 0.38);
+  box-shadow:
+    inset 0 1px 1px rgba(8, 22, 38, 0.50),
+    0 1px 0 rgba(255, 255, 255, 0.14);
+  pointer-events: none;
+}
+/* 滑塊：冰山 SVG 騎在軌槽上滑動，壓住當前檔位的凹點。
+   放大一號讓冰山輪廓清晰可見，加雙層投影塑形。 */
+.rail-ink {
+  position: absolute;
+  bottom: 5px;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  transition: left 0.42s cubic-bezier(0.34, 1.26, 0.4, 1);
+  filter: drop-shadow(0 1px 2px rgba(8, 22, 38, 0.45))
+    drop-shadow(0 2px 4px rgba(8, 22, 38, 0.25));
+}
+.rail-ink-art { display: block; }
+/* 視圖切換：輕微升起淡入 */
+.rail-view { animation: railViewIn 0.32s cubic-bezier(0.25, 0.7, 0.3, 1); }
+@keyframes railViewIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ 液态玻璃分段控件（小号：周/日課表切換等） ============ */
+.liquid-seg {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              color 0.25s ease,
+              transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+}
+
+.liquid-seg:not(.active) {
+  color: #1D4E73;
+  background: #FDFEFE;
+  border: 1.5px solid rgba(46, 110, 168, 0.42);
+}
+
+.liquid-seg.active {
+  color: #FDFEFE;
+  font-weight: 700;
+  background: #2E86B8;
+  border: 1.5px solid #FDFEFE;
+}
+
+.liquid-seg:active { transform: scale(0.95); }
+
+.liquid-seg > * { position: relative; z-index: 1; }
+
+/* ============ 圆角 logo（雪白实底，无玻璃效果）============ */
+.logo-glass {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: #F3F7F9;
+  border: 1px solid rgba(46, 110, 168, 0.34);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4px;
+}
+.logo-glass img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 7px;
+}
+
+/* ============ 模块标题冰晶字（页面顶部）============ */
+.ice-title {
+  display: inline-block;
+  vertical-align: middle;
+  height: 26px;
+  width: auto;
+  filter: drop-shadow(0 1px 2px rgba(31, 58, 89, 0.5)) drop-shadow(0 0 1px rgba(168, 216, 234, 0.25));
+}
+
+/* ============ logo 简单圆角（仅首页 HAON 用）============ */
+.logo-rounded {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.logo-rounded img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============ 标题字背景块（雪白实底，无玻璃效果）============ */
+.ice-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 10px;
+  background: #FDFEFE;
+  border: 1.5px solid rgba(46, 110, 168, 0.38);
+}
+.ice-title {
+  display: block;
+  height: 22px;
+  width: auto;
+  filter: drop-shadow(0 0 1px rgba(168, 216, 234, 0.35)) drop-shadow(0 1px 0 rgba(31, 58, 89, 0.4));
+}
+
+
+/* ============================================================
+   ============ HOME · 極地藍手繪雪山（Polar Blue）============
+   深藍夜空 + 奶油白卡 + 粉藍/亮天藍點綴。
+   素材位：/public/art/（同檔名替換即生效）。
+   ============================================================ */
+
+/* 手寫數字字體（素材未到位時的 fallback；本地打包，離線可用） */
+@font-face {
+  font-family: 'Caveat';
+  src: url('/fonts/caveat-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+.hand-num {
+  font-family: 'Caveat', 'Georgia', cursive;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ---- 夜空底：與其他頁統一（用 var(--bg-page)，雪花 4 朵全頁都有） ---- */
+.page-home {
+  background: var(--bg-page);
+  position: relative;
+}
+#root.home-night {
+  background: #4F97D2;
+}
+
+/* ---- 夜空散雪（固定視口層） ---- */
+.home-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.home-flake {
+  position: absolute;
+  animation: flakeDrift 7s ease-in-out infinite alternate;
+}
+@keyframes flakeDrift {
+  from { transform: translateY(0) rotate(-6deg); }
+  to { transform: translateY(9px) rotate(7deg); }
+}
+/* 讓內容壓在雪花之上 */
+.page-home .page-header,
+.page-home .page-scroll {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- 刊頭 ---- */
+.home-masthead {
+  background: none;
+  color: #FDFEFE;
+  padding: 0 20px !important;
+  padding-top: calc(env(safe-area-inset-top, 0px) + 14px) !important;
+  padding-bottom: 0 !important;
+  min-height: calc(env(safe-area-inset-top, 0px) + 72px);
+  border-bottom: 1px solid rgba(253, 254, 254, 0.55);
+}
+.home-mast-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.home-kicker {
+  font-family: 'Baloo 2', -apple-system, 'PingFang SC', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: rgba(253, 254, 254, 0.95);
+}
+.home-date-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.home-date-num-wrap {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1px;
+}
+.home-date-num-wrap .hand-num,
+.home-date-num-wrap img {
+  color: #FDFEFE;
+}
+.home-date-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+  padding-bottom: 4px;
+}
+.home-date-month {
+  font-family: Georgia, 'Songti SC', 'SimSun', serif;
+  font-size: 15px;
+  color: #FDFEFE;
+  letter-spacing: 0.02em;
+}
+.home-date-year {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: #7c97b4;
+}
+
+/* ---- 版心 ---- */
+.home-body {
+  padding: 0 20px calc(105px + env(safe-area-inset-bottom, 6px)) !important;
+}
+.home-rule {
+  height: 1px;
+  background: rgba(46, 110, 168, 0.28);
+  margin: 22px 0 12px;
+}
+/* ---- 手繪冰山分隔條（Hero 後主分隔 + 頁尾收尾） ---- */
+.home-divider {
+  margin: 20px 0 4px;
+  opacity: 0.9;
+}
+.home-divider-end {
+  margin: 24px 0 -6px;
+  opacity: 0.95;
+}
+/* ---- 今日空態北極熊 ---- */
+.home-bear-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 0 2px;
+}
+.home-sec-label {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.home-sec-label > span:first-child,
+.home-sec-label span:nth-child(2) {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #FDFEFE;
+}
+.home-sec-count {
+  font-family: 'Caveat', cursive;
+  font-size: 15px;
+  color: #FFFFFF;
+}
+
+/* ---- 問候 ---- */
+.home-greet {
+  margin: 14px 0 4px;
+  font-size: 13px;
+  color: #FDFEFE;
+}
+.home-greet-main {
+  color: #FDFEFE;
+  font-weight: 700;
+  font-size: 15px;
+}
+.home-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #F9EDC4;
+}
+
+/* ---- AI Daily Insight（每日一句） ---- */
+.home-insight {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin-top: 8px;
+  min-height: 18px;
+}
+.home-insight-star {
+  color: #F9EDC4;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.home-insight-text {
+  font-size: 13px;
+  font-style: italic;
+  color: #F9EDC4;
+  line-height: 1.45;
+}
+.home-insight-loading {
+  font-size: 13px;
+  color: #7c97b4;
+  animation: insightPulse 1.2s ease-in-out infinite;
+}
+@keyframes insightPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ---- HERO（奶油卡 + 左文右雪山） ---- */
+.home-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 15px 14px 15px 17px;
+  border-left: 3px solid var(--hero, #5bb8e5);
+  background: #F3F7F9;
+  border-radius: 0 14px 14px 0;
+  box-shadow: 0 2px 10px rgba(31, 58, 89, 0.12);
+}
+/* AI 随手记卡片：聊天气泡 + 角色"说"出提示 */
+.ai-card {
+  padding: 14px 14px 14px 17px;
+  margin-bottom: 12px;
+  background: #F3F7F9;
+  border-left: 3px solid #2E86B8;
+  border: 1px solid rgba(46, 110, 168, 0.40);
+  border-radius: 0 14px 14px 0;
+  box-shadow: 0 2px 10px rgba(31, 58, 89, 0.12);
+  position: relative;
+  overflow: visible;
+}
+.ai-bubble {
+  position: relative;
+  background: linear-gradient(180deg, #FBFEFF 0%, #EAF2F7 100%);
+  border: 1px solid rgba(46, 110, 168, 0.22);
+  border-radius: 13px;
+  padding: 8px 12px 9px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #2D5577;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(31, 58, 89, 0.08);
+  /* 尾巴见 ::after：从右边缘上部伸出，尖角朝右指向角色脸部（实测角色脸在气泡顶 y≈-22~+5） */
+  margin-bottom: 0;
+}
+.ai-bubble::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  right: -6px;
+  width: 11px;
+  height: 11px;
+  background: #F8FCFE;
+  border-right: 1px solid rgba(46, 110, 168, 0.22);
+  border-bottom: 1px solid rgba(46, 110, 168, 0.22);
+  transform: rotate(45deg);
+}
+/* textarea 现在独立在 .ai-body 之下，独占整行宽 */
+.ai-body + .ai-textarea-wrap {
+  margin-top: 12px;
+}
+.ai-textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  font-size: 16px;
+  outline: none;
+  background: #F6F9FA;
+  box-sizing: border-box;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.5;
+}
+.ai-submit-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+.ai-submit {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  background: var(--gradient-ice);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(46, 134, 184, 0.25);
+}
+.ai-submit:disabled { cursor: default; opacity: 0.7; }
+.ai-spinner {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: aiSpin 0.8s linear infinite;
+}
+@keyframes aiSpin { to { transform: rotate(360deg); } }
+.ai-feedback {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.ai-feedback.ok { color: var(--color-success); }
+.ai-feedback.fail { color: var(--color-danger); }
+.ai-body {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.ai-main { flex: 1; min-width: 0; }
+.ai-title {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.ai-title-text {
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Baloo 2', sans-serif;
+  color: #2E86B8;
+  letter-spacing: 0.04em;
+}
+
+/* 卡內插畫（冰山/雪人/北極熊）的輪廓投影：SVG 白雪與淺色卡底
+   融為一體時，按 alpha 形狀投出兩層陰影讓主體顯露出來 */
+.hero-art,
+.ai-mascot {
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 3px rgba(21, 48, 76, 0.22))
+    drop-shadow(0 9px 16px rgba(21, 48, 76, 0.10));
+}
+.home-hero-click {
+  cursor: pointer;
+}
+.home-hero-click:active {
+  opacity: 0.78;
+}
+.home-hero-empty {
+  border-left-color: #1D4E73;
+}
+.home-hero-text {
+  flex: 1;
+  min-width: 0;
+}
+.home-hero-kicker {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin-bottom: 7px;
+  color: #5bb8e5;
+}
+.home-hero-title {
+  font-family: Georgia, 'Songti SC', 'SimSun', serif;
+  font-size: 23px;
+  line-height: 1.28;
+  color: #113050;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.home-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 9px;
+  font-size: 12px;
+  color: #1D4E73;
+}
+
+/* ---- 今日時間線 ---- */
+.home-timeline {
+  display: grid;
+  /* 4 张等宽并列，溢出到第 4 张但保留滑动入口：第 4 张有 margin-right 让
+     "有第 4 张"的暗示出现（半张可见可滑入）。卡宽 = (容器内宽 - 3*gap) / 4 */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  /* 不再用负 margin 溢出：左右缘与 page-scroll 内边距对齐 */
+  padding: 2px 0 8px;
+}
+.home-timeline::-webkit-scrollbar { display: none; }
+.home-timeline { scrollbar-width: none; }
+.home-tl-card {
+  /* 等宽网格，scroll-snap-align 触发弹性滑动入口 */
+  min-width: 0;
+  scroll-snap-align: start;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 10px 9px 9px;
+  background: #F3F7F9;
+  border: 1px solid rgba(46, 110, 168, 0.26);
+  border-top: 2.5px solid var(--tl, #5bb8e5);
+  border-radius: 10px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(31, 58, 89, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.home-tl-card:active { opacity: 0.72; }
+.home-tl-card.current {
+  border: 1.5px solid #5bb8e5;
+  border-top: 2.5px solid var(--tl, #5bb8e5);
+  box-shadow: 0 0 0 2.5px rgba(91, 184, 229, 0.25), 0 2px 8px rgba(31, 58, 89, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.home-tl-card.past { opacity: 0.45; }
+.home-tl-flag {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #ff8b7c;
+  background: rgba(194, 64, 42, 0.28);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.home-tl-time {
+  font-family: 'Caveat', 'Georgia', cursive;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1;
+  color: #113050;
+}
+.home-tl-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #113050;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.home-tl-sub {
+  font-size: 10.5px;
+  color: #1D4E73;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- 速覽單行（夜空上） ---- */
+.home-brief {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 2px;
+  font-size: 12px;
+  color: #FDFEFE;
+}
+.home-brief-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.home-brief-item b {
+  font-family: var(--font-num);
+  font-size: 19px;
+  line-height: 1;
+  color: #FFFFFF;
+}
+.home-brief i {
+  flex: 0 0 1px;
+  height: 12px;
+  background: rgba(168, 216, 234, 0.25);
+}
+
+/* ---- 數字告示欄（Modern Digital Notice Board）----
+   告示欄 = 低對比「空間」（半透明白 + 細邊框）；
+   任務告示 = 中高對比「紙」（實底奶白 + 細邊 + 微妙陰影）；
+   任務文字 = 最高對比。第一眼看到的是任務內容，不是容器。 */
+.notice-board {
+  position: relative;
+}
+.board-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 2px 9px;
+}
+.board-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: #FDFEFE;
+}
+.board-index {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(253, 254, 254, 0.78);
+  display: flex;
+  gap: 5px;
+  align-items: baseline;
+}
+.board-index b {
+  font-size: 12.5px;
+  color: #FDFEFE;
+}
+.board-index .sep { opacity: 0.45; font-style: normal; }
+
+/* 告示欄板面：釘在牆上的告示板——四角螺絲把板壓在牆上，
+   板薄（一層側面厚度）、投影窄而貼牆（板緊貼牆面，影不會飄）。
+   層級：頁面藍底(最深) → 板面(淺) → 紙(最亮)。 */
+.board-space {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background:
+    repeating-linear-gradient(90deg, rgba(31, 58, 89, 0.013) 0 1px, transparent 1px 6px),
+    #E9F1F6;
+  border-radius: 14px;
+  padding: 13px 14px 16px;
+  min-height: 108px;
+  box-shadow:
+    /* 板側薄厚度（一層，緊貼） */
+    0 2.5px 0 -0.5px #CBDCE8,
+    /* 貼牆陰影：窄、均勻、貼邊 */
+    0 3px 4px -1px rgba(21, 48, 76, 0.20),
+    0 8px 16px -4px rgba(21, 48, 76, 0.14),
+    /* 板面受光 */
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(31, 58, 89, 0.05);
+}
+
+/* 四角螺絲：把板釘在牆上的金屬固定件——圓頭 + 十字槽 + 凹陷陰影 */
+.rivet {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 30%, #F4FAFD 0%, #CFE0EB 45%, #9FBCD0 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -1.5px 2px rgba(31, 58, 89, 0.30),
+    0 1px 2px rgba(21, 48, 76, 0.30);
+  pointer-events: none;
+}
+/* 十字槽：極細的兩條凹線 */
+.rivet::before {
+  content: '';
+  position: absolute;
+  left: 2px; right: 2px; top: 3.5px;
+  height: 1px;
+  background: rgba(31, 58, 89, 0.38);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+.rivet::after {
+  content: '';
+  position: absolute;
+  top: 2px; bottom: 2px; left: 3.5px;
+  width: 1px;
+  background: rgba(31, 58, 89, 0.38);
+  box-shadow: 1px 0 0 rgba(255, 255, 255, 0.55);
+}
+.rivet.tl { top: 8px; left: 8px; }
+.rivet.tr { top: 8px; right: 8px; }
+.rivet.bl { bottom: 8px; left: 8px; }
+.rivet.br { bottom: 8px; right: 8px; }
+
+/* 板面刻字：像刻/印在板上的「告示欄」——擺正、下凹受光（文字下方
+   一條亮線 = 凹槽下壁受光），不再是浮在面上的手寫便條 */
+.board-mark {
+  text-align: center;
+  font-family: 'ZCOOL QingKe HuangYou', 'Caveat', cursive;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em; /* 抵消末字字距，視覺居中 */
+  color: #1D4E73;
+  margin: 1px 0 11px;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.72),
+    0 -1px 0 rgba(31, 58, 89, 0.10);
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.board-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 84px;
+  color: #5E86A8;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.board-hint {
+  padding: 24px 2px 0;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  color: rgba(253, 254, 254, 0.48);
+  text-align: right;
+  font-family: 'Baloo 2', sans-serif;
+}
+
+/* ---- 任務告示紙 ----
+   薄紙：直角（裁切邊，不是印刷圓角）、每張底色微差（--paper-tint）、
+   微微翹邊（頂邊受光亮線 + 底部內卷暗 + 底邊紙厚）、
+   陰影窄而貼板（薄紙的影不會又大又飄）。 */
+.notice {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 12px 14px 11px;
+  background:
+    repeating-linear-gradient(0deg, rgba(31, 58, 89, 0.014) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(31, 58, 89, 0.010) 0 1px, transparent 1px 6px),
+    linear-gradient(180deg, var(--paper-tint, #FFFFFF) 0%, #FBFDFE 76%, #F2F6F8 100%);
+  border: 1px solid rgba(22, 60, 91, 0.15);
+  border-bottom-color: rgba(22, 60, 91, 0.24);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),          /* 翹起的頂邊受光 */
+    inset 0 -6px 7px -6px rgba(31, 58, 89, 0.09),      /* 底部微微內卷 */
+    0 1px 1.5px rgba(31, 58, 89, 0.13),                 /* 緊貼板的窄影 */
+    0 2.5px 6px -2px rgba(31, 58, 89, 0.10);           /* 薄紙微離的極小漫射 */
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.34s cubic-bezier(0.3, 0.7, 0.25, 1),
+    box-shadow 0.28s ease, opacity 0.32s ease;
+  cursor: default;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  will-change: transform;
+}
+.notice + .notice { margin-top: 13px; }
+
+/* ---- 固定件 A：膠帶（默認）----
+   半透明膠帶壓住紙的一角/一邊並露出紙外，微旋與紙的傾角相反，
+   像手工貼的。位置/角度全部走 CSS 變量（--tape-l 位置百分比、
+   --tape-rot 基準角），四個位置檔由 data-pos 提供：
+   top-c 頂部居中（貼紙背最常見）/ top-l 左上斜貼 /
+   top-r 右上斜貼 / bot-l 左下角。 */
+.notice::before {
+  content: '';
+  position: absolute;
+  top: var(--tape-t, -7px);
+  bottom: var(--tape-b, auto);
+  left: var(--tape-l, 50%);
+  width: 62px;
+  height: 15px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.62) 0%, rgba(236, 246, 250, 0.50) 100%);
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 1px;
+  box-shadow: 0 1px 2px rgba(31, 58, 89, 0.10);
+  transform: translateX(-50%) rotate(calc(var(--tape-rot, -2deg) + var(--lift, 0deg)));
+  /* 固定件壓在紙面（含文字）之上——半透明，文字隱約可見，真實的物理層序 */
+  z-index: 2;
+  pointer-events: none;
+}
+.notice[data-pos='top-c'] { --tape-rot: calc(var(--tilt, 0deg) * -2.6 - 2deg); }
+.notice[data-pos='top-l'] { --tape-l: 26%; --tape-rot: -17deg; }
+.notice[data-pos='top-r'] { --tape-l: 74%; --tape-rot: 15deg; }
+.notice[data-pos='bot-l'] { --tape-t: auto; --tape-b: -6px; --tape-l: 24%; --tape-rot: 11deg; }
+
+/* ---- 固定件 B：圖釘 ----
+   圓頭圖釘：左上高光 + 協調色板釘頭（--pin-color）+ 底部受壓暗面
+   + 落在板上的投影。壓住紙頂邊、釘在板上。 */
+.notice[data-fix='pin']::before {
+  width: 13px;
+  height: 13px;
+  top: calc(-6px + var(--pin-lift, 0px));
+  border: none;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.30) 26%, transparent 32%),
+    var(--pin-color, #4A7FAE);
+  box-shadow:
+    0 2px 3px rgba(31, 58, 89, 0.30),
+    0 5px 8px rgba(31, 58, 89, 0.16),
+    inset 0 -2px 3px rgba(16, 38, 60, 0.26);
+  transform: translateX(-50%);
+}
+
+/* 拿起（長按激活）：微抬 + 紙離板（陰影貼著紙邊變深）；膠帶掀角（--lift）、圖釘微拔起（--pin-lift） */
+.notice[data-phase='armed'] {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 2px 3px rgba(31, 58, 89, 0.16),
+    0 6px 10px -3px rgba(31, 58, 89, 0.13);
+  z-index: 4;
+  --lift: -4deg;
+  --pin-lift: -1px;
+}
+.notice[data-phase='armed']::before { opacity: 0.88; }
+/* 拖動中：跟手（無 transition），紙被掀起一角 → 陰影隨離板加深 */
+.notice[data-phase='drag'] {
+  transition: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 3px 5px rgba(31, 58, 89, 0.18),
+    0 9px 16px -3px rgba(31, 58, 89, 0.16);
+  z-index: 4;
+  --lift: -7deg;
+  --pin-lift: -2px;
+}
+.notice[data-phase='drag']::before { opacity: 0.72; }
+/* 撕掉飛出：向上離開告示欄，固定件隨紙飛走，克制的 420ms */
+.notice[data-phase='fly'] {
+  transition: transform 0.42s cubic-bezier(0.5, 0, 0.9, 0.55),
+    opacity 0.38s ease 0.06s, box-shadow 0.4s ease;
+  opacity: 0;
+  z-index: 5;
+  box-shadow:
+    0 4px 8px rgba(31, 58, 89, 0.16),
+    0 12px 22px -4px rgba(31, 58, 89, 0.18);
+  pointer-events: none;
+  --lift: -11deg;
+  --pin-lift: -3px;
+}
+.notice[data-phase='fly']::before { opacity: 0.9; }
+
+.notice-tag {
+  display: block;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin-bottom: 3px;
+  color: #5E86A8;
+}
+.notice.school .notice-tag { color: #2E86B8; }
+.notice.life .notice-tag { color: #B3865C; }
+
+.notice-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #113050;
+  line-height: 1.42;
+  overflow-wrap: break-word;
+}
+.notice-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 9px;
+  margin-top: 5px;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+.notice-meta > span + span::before {
+  content: '·';
+  margin-right: 9px;
+  color: rgba(94, 134, 168, 0.55);
+}
+.notice-meta .sep { color: rgba(94, 134, 168, 0.5); }
+
+/* 空行 */
+.home-empty-line {
+  padding: 14px 0 8px;
+  font-size: 12px;
+  color: #FDFEFE;
+  font-style: italic;
+}
+
+/* ---- 全完成大插畫 ---- */
+.home-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 0 6px;
+}
+.home-done-text {
+  font-size: 12.5px;
+  color: #1D4E73;
+}
+
+/* ---- 未來一週（夜空上） ---- */
+.home-week-group {
+  display: flex;
+  gap: 14px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(168, 216, 234, 0.12);
+}
+.home-week-group:last-child { border-bottom: none; }
+.home-week-date {
+  flex: 0 0 62px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.home-week-dow {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #7c97b4;
+  text-transform: uppercase;
+}
+.home-week-md {
+  font-family: var(--font-num);
+  font-size: 17px;
+  line-height: 1;
+  color: #113050;
+}
+.home-week-items {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 1px;
+}
+.home-week-item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+}
+.home-week-bullet {
+  flex: 0 0 5px;
+  height: 5px;
+  border-radius: 50%;
+  transform: translateY(-2px);
+}
+.home-week-title {
+  font-size: 13px;
+  color: #113050;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.home-week-course {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  color: #1D4E73;
+}
+
+/* ---- 快速開始 ---- */
+.home-actions {
+  display: flex;
+  gap: 8px;
+}
+.home-action {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 13px 4px 11px;
+  background: #FDFEFE;
+  border: 1px solid rgba(22, 60, 91, 0.22);
+  border-radius: 12px;
+  color: #113050;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(31, 58, 89, 0.18);
+}
+.home-action:active {
+  background: #E8F1F7;
+}
+.home-action svg {
+  color: #5bb8e5;
+}
+
+/* ============ 朋友版专属：iOS PWA 底部蓝带 → 白带 + 导航按钮贴底 ============
+   背景：朋友版部分 iOS 的 PWA standalone 模式下，position:fixed;bottom:0
+   的底部导航会被系统推到 safe-area 上方，导航与屏幕物理底之间留出
+   ~63px 空带，露出 body 的蓝色背景（#4F97D2），视觉上像一条蓝色光带。
+   多轮 CSS 对抗无效（系统级行为），改顺势而为：
+     1) body 背景改成与导航同色（#F7FAFC）——蓝带变奶白色带，
+        与导航栏视觉融合成一条整体的白色光带；
+     2) 导航按钮垂直贴底（flex-end + 固定底部呼吸），尽量靠近屏幕底，
+        不再依赖 standalone bug 下不可靠的 env(safe-area-inset-bottom)。
+   仅 html[data-friend='1']（朋友版构建，main.tsx 打标记）时生效；
+   自用版构建时该标记不存在，以下规则永不命中，样式分毫不变。 */
+html[data-friend='1'],
+html[data-friend='1'] body {
+  background: #F7FAFC;
+}
+
+html[data-friend='1'] .bottom-nav {
+  /* 按钮垂直贴死导航底边，零呼吸零内边距 */
+  align-items: flex-end;
+  padding: 0;
+}
+
+html[data-friend='1'] .nav-item {
+  /* 仅保留横向与顶部内边距，底部贴死 */
+  padding: 4px 8px 0;
+}
+
+html[data-friend='1'] .bottom-nav::after {
+  /* 白带已由 body 背景兜底，伪元素停用（避免极端情况下盖住按钮） */
+  display: none;
+}
+
+/* ============ 今日能量 · 手繪儲能壺場景（EnergyJar v2）============
+   「卡路里攝入」轉化為一隻透明水壺的水位高度——
+   水體由程序沿壺內壁輪廓繪製（漸變填充 + 手繪水面弧 + 高光）。
+   水位規則：基準線 = 目標卡路里（壺身 3/4）；
+   水位上限在基準線上方一小段，超標 12% 即封頂不再上漲。
+   構圖：草叢×3 · 北極熊(左,貼壺) · 壺(中央) · 雪人+冰雪人+冰塊(右,貼壺)。
+   數字在壺外正上方——數據第一眼。 */
+.energy-scene {
+  position: relative;
+  margin: 6px 0 20px;
+  padding: 18px 6px 8px;
+}
+.scene-title {
+  text-align: center;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: rgba(253, 254, 254, 0.62);
+  margin-bottom: 6px;
+}
+.scene-stage {
+  position: relative;
+  height: 232px;
+}
+/* 極淡的橢圓接觸陰影，讓角色「落地」 */
+.stage-ground {
+  position: absolute;
+  left: 50%; bottom: 6px;
+  width: 76%; height: 24px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(14, 38, 62, 0.22) 0%, transparent 72%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.sc { position: absolute; pointer-events: none; display: block; }
+
+/* ---- 草叢三叢：左下(熊旁) · 壺左前(前景,輕遮壺底) · 右後(冰塊旁,鏡像) ---- */
+.sc-plant  { left: 4px;  bottom: 0;    width: 44px; height: auto; opacity: 0.92; z-index: 1; }
+.sc-plant-c{ left: 118px; bottom: 2px; width: 30px; height: auto; opacity: 0.96; z-index: 5; }
+.sc-plant-b{ right: 46px; bottom: 2px; width: 36px; height: auto; opacity: 0.9;
+             transform: scaleX(-1); z-index: 0; }
+
+/* ---- 北極熊：左側靠壺（貼壺肚最寬處，留一絲空隙不遮擋；圖層在壺後） ---- */
+.sc-bear { left: 37px; bottom: 0; width: 102px; height: auto; z-index: 0; }
+
+/* ---- 儲能壺：中央主角 ---- */
+.sc-jar {
+  position: absolute;
+  left: 50%; bottom: 4px;
+  width: 134px; height: 178px;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+.jar-glass {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+/* 程序繪製的水體層：與壺 SVG 同 viewBox，完全重合 */
+.jar-water-svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  display: block;
+}
+/* 水面主弧線（白）。SVG 座標 1050→134px，1px ≈ 7.8 單位 */
+.jw-main {
+  fill: none;
+  stroke: rgba(253, 254, 254, 0.88);
+  stroke-width: 20;
+  stroke-linecap: round;
+}
+/* 水面副弧線（淡藍，主線下方） */
+.jw-echo {
+  fill: none;
+  stroke: rgba(146, 194, 222, 0.5);
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+/* 左側玻璃高光帶 */
+.jw-hi { fill: rgba(253, 254, 254, 0.13); }
+/* 基準線（壺外刻度段 + 壺內淡線段） */
+.jw-base    { stroke: rgba(253, 254, 254, 0.78); stroke-width: 17; stroke-linecap: round; }
+.jw-base-in { stroke: rgba(253, 254, 254, 0.26); stroke-width: 10; }
+/* 水位上限：基準線上方一小段，極淡虛線 */
+.jw-cap {
+  stroke: rgba(253, 254, 254, 0.22);
+  stroke-width: 11;
+  stroke-dasharray: 62 48;
+  stroke-linecap: round;
+}
+/* 基準線數字（目標值） */
+.jw-base-num {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 72px;
+  font-weight: 700;
+  fill: rgba(253, 254, 254, 0.8);
+}
+
+/* ---- 壺外數字：壺正上方（Caveat 手寫大字，超標變提醒色） ---- */
+.jar-head {
+  position: absolute;
+  top: -46px; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+}
+.jar-head b {
+  font-family: 'Caveat', cursive;
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1;
+  color: #FDFEFE;
+  letter-spacing: 0.01em;
+}
+.jar-head span {
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(253, 254, 254, 0.55);
+}
+.jar-head b.over { color: #F08A6E; }
+
+/* 壺口旁小水滴 */
+.sc-drop {
+  position: absolute;
+  top: -8px; right: -20px;
+  width: 14px; height: auto;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ---- 雪人+冰塊：右側緊貼壺身，輕微遮擋壺底 ---- */
+.sc-right { position: absolute; left: 196px; bottom: 0; width: 96px; height: 100%; z-index: 3; }
+.sc-snowman { position: absolute; left: 6px; bottom: 4px; width: 58px; height: auto; z-index: 3; }
+.sc-ice    { position: absolute; left: 62px; bottom: 0; width: 36px; height: auto; z-index: 2; }
+
+/* 底部信息行：剩餘/超了 · 百分比 · 結賬提示 */
+.scene-foot {
+  margin-top: 8px;
+  text-align: center;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(253, 254, 254, 0.72);
+  white-space: nowrap;
+}
+.scene-foot .dot { font-style: normal; opacity: 0.4; margin: 0 6px; }
+.scene-foot .foot-left { color: rgba(253, 254, 254, 0.92); }
+.scene-foot .foot-over { color: #F0B4A4; font-weight: 700; }
+.scene-foot .foot-pct { color: rgba(253, 254, 254, 0.82); }
+.scene-foot .foot-checkout { color: rgba(253, 254, 254, 0.72); font-weight: 500; }
